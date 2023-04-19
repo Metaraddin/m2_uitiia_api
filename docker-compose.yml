@@ -1,0 +1,16 @@
+services:
+    web:
+        build: .
+        command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; uvicorn src.app.api:app --host 0.0.0.0 --reload'
+        volumes:
+            - .:/src
+        environment:
+            - TIMEOUT=5
+        depends_on:
+            - db
+    db:
+        image: postgres
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+volumes:
+    postgres_data:
