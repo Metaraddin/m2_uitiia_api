@@ -1,7 +1,7 @@
 services:
     api:
         ports:
-            - 8008:8000
+            - 8000:8000
         environment:
             - POSTGRES_URL=postgresql://m2_react:m2_react@db:5432/m2_react
             - CLIENT_URL=http://localhost:3000
