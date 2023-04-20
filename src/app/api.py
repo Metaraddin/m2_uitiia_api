@@ -18,7 +18,7 @@ from src.routers import users
 
 settings = get_settings()
 
-app = FastAPI(title="УИТИиА Килюп Лев", version="1.0", openapi_tags=tags_metadata,
+app = FastAPI(title="УИТИиА", version="1.0", openapi_tags=tags_metadata,
               dependencies=[Depends(get_db)])
 
 origins = [
