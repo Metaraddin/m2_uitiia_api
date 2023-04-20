@@ -24,7 +24,7 @@ async def create_user(user_info: UserCreate, session: Session = Depends(get_db),
     curr_user = users.create_user(u=user_info, s=session)
     if not curr_user:
         raise HTTPException(status_code=400, detail=[{'msg': 'User with this email already exists'}])
-    token = users.create_user_token(curr_user.id, Authorize)
+    token = users.create_user_token(id=curr_user.id, remember=True, Authorize=Authorize)
     return UserAndTokens(User=curr_user, Token=token)
 
 
@@ -59,7 +59,7 @@ async def refresh(session: Session = Depends(get_db), Authorize: AuthJWT = Depen
     if not curr_user:
         raise HTTPException(status_code=400)
 
-    token = users.create_user_token(id=curr_user.id, Authorize=Authorize, remember=False)
+    token = users.create_user_token(id=curr_user.id, remember=False, Authorize=Authorize)
     return UserAndTokens(
         User=curr_user,
         Token=token

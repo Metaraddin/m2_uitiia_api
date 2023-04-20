@@ -1,10 +1,10 @@
 services:
-    web:
+    api:
         ports:
             - ${WEB_PORT}:8000
         environment:
             - POSTGRES_URL=${POSTGRES_URL}
-            - FRONT_URI=${FRONT_URI}
+            - CLIENT_URL=${CLIENT_URI}
             - AUTHJWT_SECRET_KEY=${AUTHJWT_SECRET_KEY}
     db:
         environment:

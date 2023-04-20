@@ -4,6 +4,7 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
     authjwt_secret_key: str
     postgres_url: str
+    client_url: str
     timeout: int
 
     class Config:

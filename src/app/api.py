@@ -15,13 +15,16 @@ from src.db.database import engine, SessionLocal, DataBase
 from src.app.dependencies import get_db, get_settings
 from src.routers import users
 
+
+settings = get_settings()
+
 app = FastAPI(title="УИТИиА Килюп Лев", version="1.0", openapi_tags=tags_metadata,
               dependencies=[Depends(get_db)])
 
 origins = [
     "http://localhost",
     "http://localhost:8000",
-    "http://localhost:3000",
+    settings.client_url
 ]
 
 app.add_middleware(
@@ -33,8 +36,6 @@ app.add_middleware(
 )
 
 app.include_router(users.router)
-
-settings = get_settings()
 
 
 class JWTSettings(BaseModel):
