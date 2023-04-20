@@ -6,6 +6,7 @@ from sqlalchemy.exc import OperationalError
 from fastapi import FastAPI, Request, Response, Depends
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from pydantic import BaseModel
@@ -35,13 +36,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mount('/static', StaticFiles(directory='static'), name='static')
 app.include_router(users.router)
 
 
 class JWTSettings(BaseModel):
     authjwt_secret_key: str = settings.authjwt_secret_key
-    authjwt_access_token_expires: int = timedelta(seconds=5)
-    authjwt_refresh_token_expires: int = timedelta(seconds=60)
+    authjwt_access_token_expires: int = timedelta(minutes=5)
+    authjwt_refresh_token_expires: int = timedelta(weeks=4)
     authjwt_token_location: set = {"cookies"}
     authjwt_cookie_csrf_protect: bool = False
 

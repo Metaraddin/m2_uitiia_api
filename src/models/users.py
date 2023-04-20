@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr, constr
+from typing import Optional
 
 
 class UserBase(BaseModel):
@@ -7,6 +8,8 @@ class UserBase(BaseModel):
     first_name: constr(min_length=1, max_length=30)
     last_name: constr(min_length=1, max_length=30)
     middle_name: constr(min_length=1, max_length=30)
+    hashed_password = str
+    avatar_uri: Optional[str]
 
 
 class UserRead(BaseModel):
@@ -15,6 +18,7 @@ class UserRead(BaseModel):
     first_name: constr(min_length=1, max_length=30)
     last_name: constr(min_length=1, max_length=30)
     middle_name: constr(min_length=1, max_length=30)
+    avatar_uri: Optional[str]
 
     class Config:
         orm_mode = True
@@ -32,3 +36,7 @@ class UserLogin(BaseModel):
     email: EmailStr
     password: constr(min_length=6, max_length=30)
     remember_me: bool
+
+
+class UserAvatarUpdate(BaseModel):
+    avatar_uri: str

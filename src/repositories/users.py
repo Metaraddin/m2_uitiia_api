@@ -62,3 +62,12 @@ def get_user_by_id(id: int, s: Session):
 
 def get_all_user(s: Session, limit: int = 100, skip: int = 0):
     return s.query(User).limit(limit).offset(skip).all()
+
+
+def update_avatar_user(id: int, s: Session, avatar_uri: str = None):
+    user = s.query(User).filter(User.id == id).first()
+    if user:
+        user.avatar_uri = avatar_uri
+        s.add(user)
+        s.commit()
+        return user

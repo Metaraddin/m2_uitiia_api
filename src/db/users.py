@@ -10,3 +10,4 @@ class User(DataBase):
     last_name = Column(String, nullable=True)
     middle_name = Column(String, nullable=True)
     hashed_password = Column(String, nullable=False)
+    avatar_uri = Column(String, nullable=True)

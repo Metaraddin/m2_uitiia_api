@@ -115,3 +115,5 @@ dmypy.json
 
 
 .idea/
+src/images/avatars/*
+!src/images/avatars/.gitkeep

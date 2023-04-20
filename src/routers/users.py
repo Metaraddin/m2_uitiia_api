@@ -1,6 +1,7 @@
 from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, UploadFile
+from fastapi.responses import FileResponse
 from fastapi_jwt_auth import AuthJWT
 from fastapi.security import HTTPBearer
 from sqlalchemy.orm import Session
@@ -105,3 +106,27 @@ async def get_user(id: int, session: Session = Depends(get_db)):
     if not curr_user:
         raise HTTPException(status_code=400, detail=[{'msg': 'User with this id does not exist'}])
     return
+
+
+@router.patch('/curr/avatar', status_code=200, response_model=UserRead)
+async def update_avatar_current_user(avatar: UploadFile, session: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
+    Authorize.jwt_required()
+    user_id = int(Authorize.get_jwt_subject())
+    file_location = f'static/avatars/user{user_id}.png'
+    user = users.update_avatar_user(id=user_id, avatar_uri=file_location, s=session)
+    if user:
+        with open(file_location, 'wb+') as file_object:
+            file_object.write(avatar.file.read())
+        return user
+    raise HTTPException(status_code=400, detail=[{'msg': 'User with this id does not exist'}])
+
+
+# @router.get('/curr/avatar', status_code=200)
+# async def get_avatar_current_user(session: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
+#     Authorize.jwt_required()
+#     curr_user = users.get_user_by_id(int(Authorize.get_jwt_subject()), session)
+#     if not curr_user:
+#         raise HTTPException(status_code=400, detail=[{'msg': 'User with this id does not exist'}])
+#     if curr_user.avatar_uri:
+#         return FileResponse(path=curr_user.avatar_uri, filename='avatar.png', media_type='image/png')
+#     raise HTTPException(status_code=400, detail=[{'msg': 'Avatar uri is None'}])
