@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-from src.models.token import Tokens
-from src.models.users import UserRead
+from models.token import Tokens
+from models.users import UserRead
 from typing import Optional
 
 

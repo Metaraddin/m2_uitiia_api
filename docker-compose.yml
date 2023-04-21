@@ -1,7 +1,7 @@
 services:
     api:
         build: .
-        command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; uvicorn src.app.api:app --host 0.0.0.0 --reload'
+        command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; cd src; uvicorn app.api:app --host 0.0.0.0 --reload'
         volumes:
             - .:/src
         environment:

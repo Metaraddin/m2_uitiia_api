@@ -6,10 +6,10 @@ from fastapi_jwt_auth import AuthJWT
 from fastapi.security import HTTPBearer
 from sqlalchemy.orm import Session
 
-from src.app.dependencies import get_db
-from src.models.users import UserRead, UserCreate, UserLogin
-from src.models.general import UserAndTokens
-from src.repositories import users
+from app.dependencies import get_db
+from models.users import UserRead, UserCreate, UserLogin
+from models.general import UserAndTokens
+from repositories import users
 
 
 router = APIRouter(prefix="/user", tags=["User"])

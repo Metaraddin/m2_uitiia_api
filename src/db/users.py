@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
-from src.db.database import DataBase
+from db.database import DataBase
 
 
 class User(DataBase):

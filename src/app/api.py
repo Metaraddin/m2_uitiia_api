@@ -11,10 +11,10 @@ from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from pydantic import BaseModel
 
-from src.app.tags import tags_metadata
-from src.db.database import engine, SessionLocal, DataBase
-from src.app.dependencies import get_db, get_settings
-from src.routers import users
+from app.tags import tags_metadata
+from db.database import engine, SessionLocal, DataBase
+from app.dependencies import get_db, get_settings
+from routers import users
 
 
 settings = get_settings()

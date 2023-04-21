@@ -1,7 +1,7 @@
 from fastapi import Request
 from functools import lru_cache
 
-import src.app.config as config
+import app.config as config
 
 
 @lru_cache()
