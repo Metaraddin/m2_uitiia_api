@@ -1,7 +1,8 @@
-from pydantic import BaseModel
-from models.token import Tokens
-from models.users import UserRead
 from typing import Optional
+from pydantic import BaseModel
+
+from app.models.token import Tokens
+from app.models.users import UserRead
 
 
 class UserAndTokens(BaseModel):

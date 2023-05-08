@@ -11,15 +11,14 @@ from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from pydantic import BaseModel
 
-from app.tags import tags_metadata
-from db.database import engine, SessionLocal, DataBase
+from app.database.database import engine, SessionLocal, DataBase
 from app.dependencies import get_db, get_settings
-from routers import users
+from app.routers import users, news
 
 
 settings = get_settings()
 
-app = FastAPI(title="УИТИиА", version="1.0", openapi_tags=tags_metadata,
+app = FastAPI(title="УИТИиА", version="1.0",
               dependencies=[Depends(get_db)])
 
 origins = [
@@ -36,8 +35,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount('/static', StaticFiles(directory='static'), name='static')
+app.mount('/static', StaticFiles(directory='app/static'), name='static')
 app.include_router(users.router)
+app.include_router(news.router)
 
 
 class JWTSettings(BaseModel):

@@ -7,9 +7,9 @@ from fastapi.security import HTTPBearer
 from sqlalchemy.orm import Session
 
 from app.dependencies import get_db
-from models.users import UserRead, UserCreate, UserLogin
-from models.general import UserAndTokens
-from repositories import users
+from app.models.users import UserRead, UserCreate, UserLogin
+from app.models.general import UserAndTokens
+from app.repositories import users
 
 
 router = APIRouter(prefix="/user", tags=["User"])

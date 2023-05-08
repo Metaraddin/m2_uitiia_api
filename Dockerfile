@@ -1,11 +1,13 @@
 FROM python
-
-WORKDIR /src
-
-ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN python -m pip install --upgrade pip && \
+  pip install --upgrade setuptools
 
-COPY . .
+WORKDIR /api
+
+COPY requirements.txt /api/requirements.txt
+RUN pip install -r /api/requirements.txt
+COPY ./ /api
+
+CMD /api/run.sh

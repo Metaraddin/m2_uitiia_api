@@ -3,10 +3,13 @@ services:
         ports:
             - 8000:8000
         environment:
-            - POSTGRES_URL=postgresql://m2_react:m2_react@db:5432/m2_react
+            - POSTGRES_URL=postgresql://m2_react:m2_react@db_postgres:5432/m2_react
             - CLIENT_URL=http://localhost:3000
             - AUTHJWT_SECRET_KEY=SECRET
-    db:
+            - TELEGRAM_API_URL=https://api.telegram.org
+            - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+            - TELEGRAM_CHANNEL_LINK=m2_uitiia_channel
+    db_postgres:
         environment:
             - POSTGRES_USER=m2_react
             - POSTGRES_PASSWORD=m2_react

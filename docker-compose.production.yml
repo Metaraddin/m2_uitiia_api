@@ -6,7 +6,10 @@ services:
             - POSTGRES_URL=${POSTGRES_URL}
             - CLIENT_URL=${CLIENT_URI}
             - AUTHJWT_SECRET_KEY=${AUTHJWT_SECRET_KEY}
-    db:
+            - TELEGRAM_API_URL=${TELEGRAM_API_URL}
+            - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+            - TELEGRAM_CHANNEL_LINK=${TELEGRAM_CHANNEL_LINK}
+    db_postgres:
         environment:
             - POSTGRES_USER=${POSTGRES_USER}
             - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}

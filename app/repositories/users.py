@@ -5,9 +5,9 @@ import string
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
-from models.users import UserCreate
-from models.token import Tokens
-from db.users import User
+from app.models.users import UserCreate
+from app.models.token import Tokens
+from app.database.users import User
 
 
 def __hash_password(password: str, salt: str = None):

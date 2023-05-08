@@ -1,8 +1,8 @@
 import requests
 
 from app.dependencies import get_settings
-from models.news import NewsInput
-from models.users import UserRead
+from app.models.news import NewsInput
+from app.models.users import UserRead
 
 
 settings = get_settings()
@@ -16,5 +16,10 @@ def post_news(n: NewsInput, u: UserRead = None):
     if u:
         content += f'\n<em>{u.email}</em>'
 
-    request = f'{api_url}/bot{bot_token}/sendMessage?chat_id={channel_link}&text={content}&parse_mode=html'
+    request = f'{api_url}/bot{bot_token}/sendMessage?chat_id=@{channel_link}&text={content}&parse_mode=html'
     return requests.get(request).json()['result']['message_id']
+
+
+def delete_news(message_id):
+    request = f'{api_url}/bot{bot_token}/deleteMessage?chat_id=@{channel_link}&message_id={message_id}'
+    return requests.get(request)
