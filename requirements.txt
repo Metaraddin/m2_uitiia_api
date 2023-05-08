@@ -6,3 +6,4 @@ fastapi_jwt_auth
 psycopg2
 python-multipart
 requests
+websockets

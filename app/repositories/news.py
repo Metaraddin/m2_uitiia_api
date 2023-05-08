@@ -21,7 +21,3 @@ def create_news(n: NewsInput, s: Session, u: UserRead = None):
     except IntegrityError:
         delete_news(message_id)
         return
-
-
-def get_all_news(s: Session, limit: int = 100, skip: int = 0):
-    return s.query(News).limit(limit).offset(skip).all()
