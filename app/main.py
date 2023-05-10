@@ -46,7 +46,7 @@ app.add_api_websocket_route("/chat", chat.websocket_chat)
 
 class JWTSettings(BaseModel):
     authjwt_secret_key: str = settings.authjwt_secret_key
-    authjwt_access_token_expires: int = timedelta(minutes=5)
+    authjwt_access_token_expires: int = timedelta(hours=5)
     authjwt_refresh_token_expires: int = timedelta(weeks=4)
     authjwt_token_location: set = {"cookies"}
     authjwt_cookie_csrf_protect: bool = False
@@ -112,7 +112,7 @@ html = """
         var ws = null;
             function connect(event) {
                 var token = document.getElementById("token")
-                ws = new WebSocket("ws://localhost:8000/chat?token=" + token.value);
+                var ws = new WebSocket("ws://localhost:8000/chat?token=" + token.value);
                 ws.onmessage = function(event) {
                     var messages = document.getElementById('messages')
                     var message = document.createElement('li')
@@ -132,6 +132,43 @@ html = """
     </body>
 </html>
 """
+
+# html = """
+# <!DOCTYPE html>
+# <html>
+#     <head>
+#         <title>Chat</title>
+#     </head>
+#     <body>
+#         <h1>WebSocket Chat</h1>
+#         <h2>Your ID: <span id="ws-id"></span></h2>
+#         <form action="" onsubmit="sendMessage(event)">
+#             <input type="text" id="messageText" autocomplete="off"/>
+#             <button>Send</button>
+#         </form>
+#         <ul id='messages'>
+#         </ul>
+#         <script>
+#             var client_id = Date.now()
+#             document.querySelector("#ws-id").textContent = client_id;
+#             var ws = new WebSocket(`ws://localhost:8000/chat`);
+#             ws.onmessage = function(event) {
+#                 var messages = document.getElementById('messages')
+#                 var message = document.createElement('li')
+#                 var content = document.createTextNode(event.data)
+#                 message.appendChild(content)
+#                 messages.appendChild(message)
+#             };
+#             function sendMessage(event) {
+#                 var input = document.getElementById("messageText")
+#                 ws.send(input.value)
+#                 input.value = ''
+#                 event.preventDefault()
+#             }
+#         </script>
+#     </body>
+# </html>
+# """
 
 
 @app.get("/")
