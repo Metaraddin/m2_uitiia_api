@@ -115,7 +115,7 @@ async def update_avatar_current_user(avatar: UploadFile, session: Session = Depe
     file_location = f'static/avatars/user{user_id}.png'
     user = users.update_avatar_user(id=user_id, avatar_uri=file_location, s=session)
     if user:
-        with open(file_location, 'wb+') as file_object:
+        with open(f'app/{file_location}', 'wb+') as file_object:
             file_object.write(avatar.file.read())
         return user
     raise HTTPException(status_code=400, detail=[{'msg': 'User with this id does not exist'}])

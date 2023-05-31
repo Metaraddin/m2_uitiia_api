@@ -13,8 +13,8 @@ from app.websockets.manager import manager
 
 MESSAGE_TYPES = {
     'MESSAGE': 'message',
-    'CONNECTION': 'connection',
-    'DISCONNECTION': 'disconnection'
+    # 'CONNECTION': 'connection',
+    # 'DISCONNECTION': 'disconnection'
 }
 
 
@@ -30,16 +30,17 @@ async def websocket_chat(websocket: WebSocket, token: str = Query(...), session:
         else:
             curr_user = None
         
-        await manager.broadcast(json.dumps({'type': MESSAGE_TYPES['CONNECTION'], 'email': curr_user.email, 'datatime': datetime.utcnow()}, default=str))
+        # await manager.broadcast(json.dumps({'type': MESSAGE_TYPES['CONNECTION'], 'email': curr_user.email, 'avatar_uri': curr_user.avatar_uri, 'datatime': datetime.utcnow()}, default=str))
 
         while True:
             data = await websocket.receive_text()
-            await manager.broadcast(json.dumps({'type': MESSAGE_TYPES['MESSAGE'], 'text': data, 'email': curr_user.email, 'datatime': datetime.utcnow()}, default=str))
+            await manager.broadcast(json.dumps({'type': MESSAGE_TYPES['MESSAGE'], 'text': data, 'email': curr_user.email, 'avatar_uri': curr_user.avatar_uri, 'datatime': datetime.utcnow()}, default=str))
 
     except WebSocketDisconnect:
         manager.disconnect(websocket)
-        await manager.broadcast(json.dumps({'type': MESSAGE_TYPES['DISCONNECTION'], 'email': curr_user.email, 'datatime': datetime.utcnow()}, default=str))
-
+        # await manager.broadcast(json.dumps({'type': MESSAGE_TYPES['DISCONNECTION'], 'email': curr_user.email, 'avatar_uri': curr_user.avatar_uri, 'datatime': datetime.utcnow()}, default=str))
+    
     except AuthJWTException as err:
         await websocket.send_text(err.message)
+        manager.disconnect(websocket)
         await websocket.close()

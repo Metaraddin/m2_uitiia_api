@@ -11,4 +11,4 @@ class Settings(BaseSettings):
     telegram_channel_link: str
 
     class Config:
-        env_file = '../.env'
+        env_file = '.env'

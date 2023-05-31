@@ -5,7 +5,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import OperationalError
 from fastapi import FastAPI, Request, Depends
 from fastapi.responses import JSONResponse
-from fastapi.middleware.cors import CORSMiddleware
+# from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
@@ -22,15 +23,9 @@ settings = get_settings()
 app = FastAPI(title="УИТИиА", version="1.0",
               dependencies=[Depends(get_db)])
 
-origins = [
-    "http://localhost",
-    "http://localhost:8000",
-    settings.client_url
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
