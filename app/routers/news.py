@@ -34,8 +34,16 @@ async def create_news(news_info: NewsInput, session: Session = Depends(get_db),
 
 
 @router.get("/all", status_code=200, response_model=List[NewsRead])
-async def get_all_user(limit: int = 100, skip: int = 0, session: Session = Depends(get_db)):
+async def get_all_news(limit: int = 100, skip: int = 0, session: Session = Depends(get_db)):
     """
     Возвращает список всех постов.
     """
     return news.get_all_news(session, limit, skip)
+
+
+@router.delete("/delete/{post_id}")
+async def delete_news(post_id: int, session: Session = Depends(get_db)):
+    """
+    Удаляет пост из базы данных.
+    """
+    return news.delete_news_from_db(post_id=post_id, s=session)

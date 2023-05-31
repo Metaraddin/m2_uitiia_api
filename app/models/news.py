@@ -10,6 +10,9 @@ class NewsInput(BaseModel):
 class NewsRead(BaseModel):
     id: int
     datetime: datetime
+    title: str
+    content: str
+    user: str
 
     class Config:
         orm_mode = True

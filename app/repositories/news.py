@@ -13,6 +13,9 @@ def create_news(n: NewsInput, s: Session, u: UserRead = None):
 
     news = News()
     news.id = message_id
+    news.title = n.title
+    news.content = n.content
+    news.user = u.email
 
     s.add(news)
     try:
@@ -21,3 +24,22 @@ def create_news(n: NewsInput, s: Session, u: UserRead = None):
     except IntegrityError:
         delete_news(message_id)
         return
+    
+
+def get_all_news(s: Session, limit: int = 100, skip: int = 0):
+    return s.query(News).limit(limit).offset(skip).all()
+
+
+def delete_news_from_db(s: Session, post_id: int):
+    try:
+        delete_news(post_id)
+    except:
+        pass
+    news = s.query(News).filter(News.id == post_id).first()
+    s.delete(news)
+    try:
+        s.commit()
+        return news
+    except:
+        s.rollback()
+        return None
