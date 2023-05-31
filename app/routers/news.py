@@ -21,7 +21,7 @@ async def create_news(news_info: NewsInput, session: Session = Depends(get_db),
     """
     Создаёт новый пост
     """
-    Authorize.jwt_optional()
+    Authorize.jwt_required()
 
     if Authorize.get_jwt_subject():
         curr_user = users.get_user_by_id(int(Authorize.get_jwt_subject()), session)
@@ -41,8 +41,8 @@ async def get_all_news(limit: int = 100, skip: int = 0, session: Session = Depen
     return news.get_all_news(session, limit, skip)
 
 
-@router.delete("/delete/{post_id}")
-async def delete_news(post_id: int, session: Session = Depends(get_db)):
+@router.delete("/test/delete/{post_id}")
+async def test_delete_news(post_id: int, session: Session = Depends(get_db)):
     """
     Удаляет пост из базы данных.
     """
